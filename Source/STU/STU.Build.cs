@@ -36,7 +36,9 @@ public class STU : ModuleRules
             "STU/Public/AI/Tasks",
             "STU/Public/AI/Services",
             "STU/Public/AI/Decorators",
-            "STU/Public/AI/Contexts"
+            "STU/Public/AI/Contexts",
+            "STU/Public/Menu",
+            "STU/Public/Menu/UI",
         });
 
 		// Uncomment if you are using Slate UI
