@@ -4,6 +4,8 @@
 #include "Menu/UI/STUMenuWidget.h"
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
+#include "STUGameInstance.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 void USTUMenuWidget::NativeOnInitialized()
 {
@@ -13,10 +15,26 @@ void USTUMenuWidget::NativeOnInitialized()
 	{
 		StartGameButton->OnClicked.AddDynamic(this, &USTUMenuWidget::OnStartGame);
 	}
+
+	if (QuitGameButton)
+	{
+		QuitGameButton->OnClicked.AddDynamic(this, &USTUMenuWidget::OnQuitGame);
+	}
 }
 
 void USTUMenuWidget::OnStartGame()
 {
-	const FName StartupLevelName = "STU_Map";
-	UGameplayStatics::OpenLevel(this, StartupLevelName);
+	if (!GetWorld()) return;
+
+	const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
+	if (!STUGameInstance) return;
+
+	if (STUGameInstance->GetStartupLevelName().IsNone()) return;
+
+	UGameplayStatics::OpenLevel(this, STUGameInstance->GetStartupLevelName());
+}
+
+void USTUMenuWidget::OnQuitGame()
+{
+	UKismetSystemLibrary::QuitGame(this, GetOwningPlayer(), EQuitPreference::Quit, true);
 }

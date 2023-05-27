@@ -10,6 +10,7 @@
 #include "STU_Utils.h"
 #include "EngineUtils.h"
 #include "Components/STURespawnComponent.h"
+#include "STUGameInstance.h"
 
 constexpr static int32 MinRoundTimeForRespawn = 10;
 
