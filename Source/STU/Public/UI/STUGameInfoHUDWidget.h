@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/STUPlayerHUDWidget.h"
+#include "Blueprint/UserWidget.h"
 #include "STUGameInfoHUDWidget.generated.h"
 
 class ASTU_GameModeBase;
 class ASTUPlayerState;
 
 UCLASS()
-class STU_API USTUGameInfoHUDWidget : public USTUPlayerHUDWidget
+class STU_API USTUGameInfoHUDWidget : public UUserWidget
 {
 	GENERATED_BODY()
 

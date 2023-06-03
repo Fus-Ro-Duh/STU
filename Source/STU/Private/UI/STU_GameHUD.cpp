@@ -1,7 +1,7 @@
 
 #include "UI/STU_GameHUD.h"
 #include "Engine/Canvas.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/STUBaseWidget.h"
 #include "STU_GameModeBase.h"
 
 void ASTU_GameHUD::DrawHUD()
@@ -13,9 +13,9 @@ void ASTU_GameHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GameWidgets.Add(ESTUMatchState::InProgress, CreateWidget<UUserWidget>(GetWorld(), PlayerHUDWidgetClass));
-	GameWidgets.Add(ESTUMatchState::Pause, CreateWidget<UUserWidget>(GetWorld(), PauseWidgetClass));
-	GameWidgets.Add(ESTUMatchState::GameOver, CreateWidget<UUserWidget>(GetWorld(), GameOverWidgetClass));
+	GameWidgets.Add(ESTUMatchState::InProgress, CreateWidget<USTUBaseWidget>(GetWorld(), PlayerHUDWidgetClass));
+	GameWidgets.Add(ESTUMatchState::Pause, CreateWidget<USTUBaseWidget>(GetWorld(), PauseWidgetClass));
+	GameWidgets.Add(ESTUMatchState::GameOver, CreateWidget<USTUBaseWidget>(GetWorld(), GameOverWidgetClass));
 
 	for (auto GameWidgetPair : GameWidgets)
 	{
@@ -52,5 +52,6 @@ void ASTU_GameHUD::OnMatchStateChanged(ESTUMatchState State)
 	if (CurrentWidget)
 	{
 		CurrentWidget->SetVisibility(ESlateVisibility::Visible);
+		CurrentWidget->Show();
 	}
 }

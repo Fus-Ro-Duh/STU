@@ -32,7 +32,7 @@ protected:
 	UTextBlock* LevelNameTextBlock;
 
 	UPROPERTY(meta = (BindWidget))
-	UImage* LevelImage;
+	UImage* LevelImage = nullptr;
 
 	UPROPERTY(meta = (BindWidget))
 	UImage* FrameImage;
@@ -44,4 +44,8 @@ private:
 
 	UFUNCTION()
 	void OnLevelItemClicked();
+	UFUNCTION()
+	void OnLevelItemHovered();
+	UFUNCTION()
+	void OnLevelItemUnhovered();
 };

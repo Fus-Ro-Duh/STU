@@ -7,6 +7,7 @@
 #include "STU_AICharacter.generated.h"
 
 class UBehaviorTree;
+class UWidgetComponent;
 
 UCLASS()
 class STU_API ASTU_AICharacter : public ASTUBaseCharacter
@@ -20,5 +21,19 @@ public:
 	UBehaviorTree* BehaviourTreeAsset;
 
 protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	UWidgetComponent* HealthWidgetComponent;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AI")
+		float HealthVisibilityDistance = 1000.0f;
+
+	virtual void Tick(float DeltaTime) override;
+
+	virtual void BeginPlay() override;
 	virtual void OnDeath() override;
+
+	virtual void OnHealthChanged(float Health, float HealthDelta) override;
+
+private:
+	void UpdateHealthWidgetVisibility();
 };

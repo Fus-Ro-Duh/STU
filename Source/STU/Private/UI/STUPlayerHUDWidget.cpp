@@ -5,6 +5,7 @@
 #include "STU_Utils.h"
 #include "Components/HealthComponent.h"
 #include "Components/WeaponComponent.h"
+#include "Components/ProgressBar.h"
 
 float USTUPlayerHUDWidget::GetHealthPercent() const
 {
@@ -42,6 +43,22 @@ bool USTUPlayerHUDWidget::IsPlayerSpectatic() const
 	return Controller && Controller->GetStateName() == NAME_Spectating;
 }
 
+FString USTUPlayerHUDWidget::FormatBullets(int32 BulletsNum) const
+{
+	const int32 MaxLen = 2;
+	const TCHAR PrefixSymbol = '0';
+
+	auto BulletStr = FString::FromInt(BulletsNum);
+	const auto SymbolsNumToAdd = MaxLen - BulletStr.Len();
+
+	if (SymbolsNumToAdd > 0)
+	{
+		BulletStr = FString::ChrN(SymbolsNumToAdd, PrefixSymbol).Append(BulletStr);
+	}
+
+	return BulletStr;
+}
+
 void USTUPlayerHUDWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
@@ -57,7 +74,14 @@ void USTUPlayerHUDWidget::OnHealthChanged(float Health, float HealthDelta)
 	if (HealthDelta < 0.0f)
 	{
 		OnTakeDamage();
+
+		if (!IsAnimationPlaying(DamageAnimation))
+		{
+			PlayAnimation(DamageAnimation);
+		}
 	}
+
+	UpdateHealthBar();
 }
 
 void USTUPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
@@ -66,5 +90,14 @@ void USTUPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
 	if (HealthComponent)
 	{
 		HealthComponent->OnHealthChanged.AddUObject(this, &USTUPlayerHUDWidget::OnHealthChanged);
+	}
+	UpdateHealthBar();
+}
+
+void USTUPlayerHUDWidget::UpdateHealthBar()
+{
+	if (HealthProgressBar)
+	{
+		HealthProgressBar->SetFillColorAndOpacity(GetHealthPercent() > PrecentColorThreshold ? GoodColor : BadColor);
 	}
 }
