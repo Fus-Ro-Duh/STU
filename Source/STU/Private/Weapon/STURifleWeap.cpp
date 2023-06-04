@@ -7,6 +7,8 @@
 #include "STU_WeaponFXComponent.h"
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 ASTURifleWeap::ASTURifleWeap()
 {
@@ -22,9 +24,11 @@ void ASTURifleWeap::BeginPlay()
 
 void ASTURifleWeap::MakeShot()
 {
-	if (!GetWorld() || IsAmmoEmpty())
+	if (!GetWorld()) return;
+
+	if (IsAmmoEmpty())
 	{
-		StopFire();
+		UGameplayStatics::SpawnSoundAtLocation(GetWorld(), NoAmmoSound, GetActorLocation());
 		return;
 	}
 
@@ -47,6 +51,8 @@ void ASTURifleWeap::MakeShot()
 	SpawnTraceFX(GetMuzzleWorldLocation(), TraceFXEnd);
 	DecreaseAmmo();
 	SpawnMuzzleFX();
+
+	UGameplayStatics::SpawnSoundAttached(FireSound, WeaponMesh, MuzzleSocketName);
 }
 
 void ASTURifleWeap::StartFire()

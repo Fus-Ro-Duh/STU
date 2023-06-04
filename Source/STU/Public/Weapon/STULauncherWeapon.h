@@ -7,6 +7,7 @@
 #include "STULauncherWeapon.generated.h"
 
 class ASTUProjectile;
+class USoundCue;
 
 UCLASS()
 class STU_API ASTULauncherWeapon : public ASTUBase_Weapon
