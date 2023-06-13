@@ -9,6 +9,7 @@
 
 class UPhysicalMaterial;
 class UNiagaraSystem;
+class USoundCue;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class STU_API USTU_WeaponFXComponent : public UActorComponent
@@ -23,6 +24,9 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
 	FImpactData DefaultImpactData;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+	USoundCue* DefaultSound;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
 	TMap<UPhysicalMaterial*, FImpactData> ImpactDataMap;

@@ -68,6 +68,20 @@ void ASTURifleWeap::StopFire()
 	//SetMuzzleVisibility(false);
 }
 
+void ASTURifleWeap::Zoom(bool Enabled)
+{
+	const auto Controller = Cast<APlayerController>(GetController());
+
+	if (!Controller || !Controller->PlayerCameraManager) return;
+
+	if (Enabled)
+	{
+		DefaultCameraFOV = Controller->PlayerCameraManager->GetFOVAngle();
+	}
+
+	Controller->PlayerCameraManager->SetFOV(Enabled ? FOVZoomAngle : DefaultCameraFOV);
+}
+
 bool ASTURifleWeap::GetTraceData(FVector& TraceStart, FVector& TraceEnd) const
 {
 	FVector ViewLocation;

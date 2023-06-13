@@ -35,6 +35,8 @@ public:
 	bool IsAmmoEmpty() const;
 	bool IfAmmoFull();
 
+	virtual void Zoom(bool Enabled) {}
+
 protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")

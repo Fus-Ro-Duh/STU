@@ -29,6 +29,8 @@ public:
 
 	TArray<ASTUBase_Weapon*> GetWeapons();
 
+	void Zoom(bool Enabled);
+
 protected:
 
 	int32 CurrentWeaponIndex = 0;

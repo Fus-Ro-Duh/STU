@@ -7,6 +7,8 @@
 #include "GameFramework/Controller.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 ASTUBase_Weapon::ASTUBase_Weapon()
 {
@@ -26,7 +28,6 @@ void ASTUBase_Weapon::BeginPlay()
 }
 
 void ASTUBase_Weapon::MakeShot(){}
-
 
 void ASTUBase_Weapon::StartFire(){}
 

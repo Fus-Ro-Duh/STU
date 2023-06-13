@@ -7,6 +7,7 @@
 #include "TimerManager.h"
 #include "Camera/CameraShakeBase.h"
 #include "STU_GameModeBase.h"
+#include "Perception/AISense_Damage.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogHealthComponent, All, All);
 
@@ -50,6 +51,7 @@ void UHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, const
 	}
 
 	PlayCameraShake();
+	ReportDamageEvent(Damage, InstigatedBy);
 }
 
 void UHealthComponent::RegenarateHealth()
@@ -108,4 +110,17 @@ void UHealthComponent::Killed(AController* Killer)
 	const auto Victim = Player ? Player->Controller : nullptr;
 
 	GameMode->Killed(Killer, Victim);
+}
+
+void UHealthComponent::ReportDamageEvent(float Damage, AController* InstigatedBy)
+{
+	if(!InstigatedBy || !InstigatedBy->GetPawn() ||
+		!GetWorld() || !GetOwner())
+	UAISense_Damage::ReportDamageEvent(
+		GetWorld(), 
+		GetOwner(), 
+		InstigatedBy->GetPawn(), 
+		Damage, 
+		InstigatedBy->GetPawn()->GetActorLocation(), 
+		GetOwner()->GetActorLocation());
 }

@@ -62,8 +62,8 @@ private:
 	void SetHealth(float NewHealth);
 
 	bool IsHealthFull();
-
 	void PlayCameraShake();
-
 	void Killed(AController* Killer);
+
+	void ReportDamageEvent(float Damage, AController* InstigatedBy);
 };

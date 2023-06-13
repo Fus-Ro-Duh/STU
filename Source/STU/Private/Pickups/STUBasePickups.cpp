@@ -3,7 +3,8 @@
 
 #include "Pickups/STUBasePickups.h"
 #include "Components/SphereComponent.h"
-
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 ASTUBasePickups::ASTUBasePickups()
 {
@@ -57,6 +58,7 @@ void ASTUBasePickups::PickupWasTaken()
 	if (GetRootComponent())
 	{
 		GetRootComponent()->SetVisibility(false, true);
+		UGameplayStatics::SpawnSoundAtLocation(GetWorld(), PickupSound, GetActorLocation());
 	}
 	GetWorldTimerManager().SetTimer(RespawnTimerHandle, this, &ASTUBasePickups::Respawn, RespawnTime);
 }

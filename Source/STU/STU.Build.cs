@@ -39,6 +39,7 @@ public class STU : ModuleRules
             "STU/Public/AI/Contexts",
             "STU/Public/Menu",
             "STU/Public/Menu/UI",
+            "STU/Public/Sound"
         });
 
 		// Uncomment if you are using Slate UI
